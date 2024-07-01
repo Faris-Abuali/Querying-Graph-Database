@@ -6,8 +6,8 @@ import z3
 
 class Graph:
     def __init__(self):
-        self.nodes = set()
-        self.adjacency_map = {}
+        self.nodes = set() # set of vertices
+        self.adjacency_map = {} # map of vertice to list
 
     def add_node(self, node):
         self.nodes.add(node)
