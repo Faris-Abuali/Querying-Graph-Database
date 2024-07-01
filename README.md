@@ -3,11 +3,11 @@
 ## Group Members
 
 - Mahmoud M. Hamido (Mtr. No. 428723)
-- Faris Abuali (Mtr. No. 429085)
+- Faris H. Abu Ali (Mtr. No. 429085)
 
 ## TODO List
 
-- [ ] Add Type Annotations.
+- [x] Add Type Annotations.
 - [ ] Implement Task 1.
   - [ ] DFS.
   - [ ] BFS.
