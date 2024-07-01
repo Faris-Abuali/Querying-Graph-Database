@@ -3,6 +3,7 @@
 import json
 import z3
 
+
 class Graph:
     def __init__(self):
         self.nodes = set()
@@ -17,11 +18,15 @@ class Graph:
         self.add_node(from_node)
         self.add_node(to_node)
         self.adjacency_map[from_node].append(to_node)
+
     def __str__(self):
         result = "Graph:\n"
         for node in sorted(self.nodes):
-            result += f"{node}: {', '.join(map(str, self.adjacency_map.get(node, [])))}\n"
+            result += (
+                f"{node}: {', '.join(map(str, self.adjacency_map.get(node, [])))}\n"
+            )
         return result
+
 
 class AutomatonTransition:
     def __init__(self, from_state, to_state, formula):
@@ -31,6 +36,7 @@ class AutomatonTransition:
 
     def __str__(self):
         return f"From: {self.from_state}, To: {self.to_state}, Formula: {self.formula}"
+
 
 class NodeAttributes:
     def __init__(self):
@@ -45,43 +51,48 @@ class NodeAttributes:
         else:
             raise ValueError("Unsupported attribute type")
 
-
     def get_variable(self, var_name):
         return self.alphabet.get(var_name, None)
-    
+
     def __str__(self):
         output = "Node Attributes:\n"
         for var_name, value in self.attribute_map.items():
             output += f"{var_name}: {value}\n"
         return output
 
+
 class Automaton:
     def __init__(self):
         self.initial_state = None
         self.transitions = []
         self.final_states = set()
+
     def __str__(self):
         transitions_str = "\n".join(str(transition) for transition in self.transitions)
         return f"Initial State: {self.initial_state}, Transitions:\n{transitions_str}, Final States: {self.final_states}"
 
 
 def create_global_var(var_name, type):
-        if type == "Real":
-            return z3.Real(var_name)
-        elif type == "String":
-            return z3.String(var_name)
-        else:
-            raise ValueError("Unsupported attribute type")
+    if type == "Real":
+        return z3.Real(var_name)
+    elif type == "String":
+        return z3.String(var_name)
+    else:
+        raise ValueError("Unsupported attribute type")
+
 
 def merge_dicts(dict1, dict2):
     common_keys = set(dict1.keys()) & set(dict2.keys())
     if common_keys:
-        raise ValueError(f"Key(s) {common_keys} are present in both dictionaries and would be overwritten")
+        raise ValueError(
+            f"Key(s) {common_keys} are present in both dictionaries and would be overwritten"
+        )
 
     return {**dict1, **dict2}
 
+
 def parse_json_file(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         json_data = json.load(file)
 
     graph_db = Graph()
@@ -108,7 +119,8 @@ def parse_json_file(file_path):
     automaton.initial_state = json_data["Automaton"]["Initial State"]
     automaton.final_states = set(json_data["Automaton"]["Final States"])
     automaton.transitions = [
-        AutomatonTransition(t['from'], t['to'], t['formula']) for t in json_data["Automaton"]["Transitions"]
+        AutomatonTransition(t["from"], t["to"], t["formula"])
+        for t in json_data["Automaton"]["Transitions"]
     ]
 
     # Parse Global Variables
@@ -118,12 +130,14 @@ def parse_json_file(file_path):
     return graph_db, attributes, automaton, global_vars
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     solver = z3.Solver()
-    file_path = 'example1.json'  # Path to your JSON file
+    file_path = "example1.json"  # Path to your JSON file
 
     # Parse JSON file
-    parsed_graph, parsed_attributes, parsed_automaton, global_vars = parse_json_file(file_path)
+    parsed_graph, parsed_attributes, parsed_automaton, global_vars = parse_json_file(
+        file_path
+    )
 
     # Example usage to access the parsed data
     print("Graph Database:", parsed_graph)
@@ -135,12 +149,16 @@ if __name__ == '__main__':
 
     all_variables = merge_dicts(parsed_attributes.alphabet, global_vars)
     # Parse smt2 string with declared vars; returns vector of assertions, in our case always 1
-    test0 = z3.parse_smt2_string(parsed_automaton.transitions[0].formula, decls=all_variables)[0]
+    test0 = z3.parse_smt2_string(
+        parsed_automaton.transitions[0].formula, decls=all_variables
+    )[0]
     solver.add(test0)
     print("test0: ", test0)
     solver.check()
-    print("model 1:",solver.model())
-    test = z3.parse_smt2_string(parsed_automaton.transitions[1].formula, decls=all_variables)[0]
+    print("model 1:", solver.model())
+    test = z3.parse_smt2_string(
+        parsed_automaton.transitions[1].formula, decls=all_variables
+    )[0]
     print("test:", test)
     solver.add(test)
     # Check model
@@ -148,8 +166,8 @@ if __name__ == '__main__':
     print("model 2: ", solver.model())
 
     # Replace age by value 2
-    test4 = (parsed_attributes.alphabet['age'])
-    test5 = (global_vars['p1'])
+    test4 = parsed_attributes.alphabet["age"]
+    test5 = global_vars["p1"]
     # test0[0] is the first assert in the z3 ast vector
     expr2 = z3.substitute(test0, (test4, z3.RealVal(2.0)))
     print("Substitute age by 2: ", expr2)
