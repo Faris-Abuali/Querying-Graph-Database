@@ -2,7 +2,7 @@
 
 import json
 import z3
-from typing import TypeAlias
+from typing import TypeAlias, Union
 
 Node: TypeAlias = str
 
@@ -31,7 +31,7 @@ class Graph:
 
 
 class AutomatonTransition:
-    def __init__(self, from_state, to_state, formula):
+    def __init__(self, from_state: int, to_state: int, formula: str):
         self.from_state = from_state
         self.to_state = to_state
         self.formula = formula
@@ -42,10 +42,10 @@ class AutomatonTransition:
 
 class NodeAttributes:
     def __init__(self):
-        self.alphabet = {}
-        self.attribute_map = {}
+        self.alphabet: dict[str, z3.Real | z3.String] = {}
+        self.attribute_map: dict[str, tuple] = {}
 
-    def add_variable(self, var_name, value):
+    def add_variable(self, var_name, value: int | str):
         if isinstance(value, (int, float)):
             self.alphabet[var_name] = z3.Real(var_name)
         elif isinstance(value, str):
@@ -53,7 +53,7 @@ class NodeAttributes:
         else:
             raise ValueError("Unsupported attribute type")
 
-    def get_variable(self, var_name):
+    def get_variable(self, var_name: str) -> Union[z3.Real, z3.String, None]:
         return self.alphabet.get(var_name, None)
 
     def __str__(self):
@@ -100,7 +100,7 @@ def parse_json_file(file_path):
     graph_db = Graph()
     attributes = NodeAttributes()
     automaton = Automaton()
-    attribute_map = {}
+    attribute_map: dict[str, tuple] = {}
     global_vars = {}
 
     # Parse Graph Database
@@ -145,6 +145,10 @@ if __name__ == "__main__":
     print("Graph Database:", parsed_graph)
     print("Automaton:", parsed_automaton)
     print("Attributes: ", parsed_attributes)
+    
+    # print(f"parsed_attributes.alphabet: {parsed_attributes.alphabet}")
+    # print(f"parsed_attributes.attribute_map: {parsed_attributes.attribute_map}")
+    
     print("Alphabet: ", parsed_attributes.alphabet)
     print("Formula: ", parsed_automaton.transitions[0].formula)
     print("Global Vars", global_vars)
