@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Iterable, Optional, Sequence
+from typing import Optional, Sequence
 from graph import Graph
 from mytypes import Node
 from collections import deque
@@ -10,7 +10,6 @@ Path = Sequence[Node]
 class Traversal(ABC):
     @abstractmethod
     def search(self, g: Graph, src: Node, dst: Node) -> Optional[Path]: ...
-
 
 class BFS(Traversal):
     def search(self, g: Graph, src: Node, dst: Node) -> Optional[Path]:
