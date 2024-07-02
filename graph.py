@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Iterable, Optional, Union
 import z3
 from mytypes import Node, Z3VarType
+
 
 class Graph:
     def __init__(self):
@@ -16,7 +17,7 @@ class Graph:
         self.add_node(from_node)
         self.add_node(to_node)
         self.adjacency_map[from_node].append(to_node)
-        
+
     def __str__(self):
         result = "Graph:\n"
         for node in sorted(self.nodes):
@@ -25,20 +26,21 @@ class Graph:
             )
         return result
 
+
 class NodeAttributes:
     def __init__(self):
         self.alphabet: dict[str, Z3VarType] = {}
-        self.attribute_map: dict[str, tuple] = {}
+        self.attribute_map: dict[str, Iterable[str | float]] = {}
 
-    def add_variable(self, var_name, value: int | str):
+    def add_variable(self, var_name: str, value: int | float | str):
         if isinstance(value, (int, float)):
-            self.alphabet[var_name] = z3.Real(var_name)
-        elif isinstance(value, str):
-            self.alphabet[var_name] = z3.String(var_name)
+            self.alphabet[var_name] = z3.Real(var_name)  # type: ignore
+        elif isinstance(value, str):  # type: ignore
+            self.alphabet[var_name] = z3.String(var_name)  # type: ignore
         else:
             raise ValueError("Unsupported attribute type")
 
-    def get_variable(self, var_name: str) -> Union[z3.Real, z3.String, None]:
+    def get_variable(self, var_name: str) -> Optional[Z3VarType]:
         return self.alphabet.get(var_name, None)
 
     def __str__(self):

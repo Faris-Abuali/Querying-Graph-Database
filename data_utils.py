@@ -1,6 +1,13 @@
+
+from typing import TypeVar
+
+
+K = TypeVar('K')
+V = TypeVar('V')
+
 class DataUtils:
     @staticmethod
-    def merge_dicts(dict1: dict, dict2: dict):
+    def merge_dicts(dict1: dict[K, V], dict2: dict[K, V]) -> dict[K, V]:
         common_keys = set(dict1.keys()) & set(dict2.keys())
         if common_keys:
             raise ValueError(

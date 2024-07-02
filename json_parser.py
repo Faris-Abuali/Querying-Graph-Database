@@ -13,7 +13,7 @@ class JSONParser:
         self.attribute_map: dict[str, tuple] = {}
         self.global_vars: dict[str, Z3VarType] = {}
 
-    def parse(self):
+    def parse(self) -> tuple[Graph, NodeAttributes, Automaton, dict[str, Z3VarType]]:
         with open(self.file_path, "r") as file:
             json_data = json.load(file)
 
