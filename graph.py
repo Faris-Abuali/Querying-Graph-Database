@@ -11,7 +11,7 @@ Path = Sequence[Node]
 
 class Traversal(ABC):
     @abstractmethod
-    def search(self, g: "Graph", src: Node, dst: Node) -> Optional[Path]: ...
+    def search(self, g: "Graph", src: Node, dst: Node) -> Iterable[Path]: ...
 
 
 class Graph:
@@ -75,7 +75,7 @@ class NodeAttributes:
 
 # Depth-First Search (DFS) implementation
 class DFS(Traversal):
-    def search(self, g: Graph, src: Node, dst: Node) -> Optional[Path]:
+    def search(self, g: Graph, src: Node, dst: Node) -> Iterable[Path]:
         """finds the shortest path from src to dst in graph g.
 
         Returns:
@@ -114,7 +114,7 @@ class DFS(Traversal):
 
 # Breadth-First Search (BFS) implementation
 class BFS(Traversal):
-    def search(self, g: Graph, src: Node, dst: Node) -> Optional[Path]:
+    def search(self, g: Graph, src: Node, dst: Node) -> Iterable[Path]:
         """finds the shortest path from src to dst in graph g.
 
         Returns:
@@ -126,15 +126,15 @@ class BFS(Traversal):
         while len(q) > 0:
             # Get the first path from the queue
             trail = q.popleft()
-            curr_node = trail[0]
+            curr_node = trail[-1]
 
             # The current node is the last node in the path
             if curr_node == dst:
-                yield tuple(reversed(trail))
+                yield trail
 
             for v in g.adjacency_map[curr_node]:
                 # Append the new path to the queue
-                q.append((v,) + trail)
+                q.append(trail + (v,))
 
         # Return None if no path is found
         return None
