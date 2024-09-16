@@ -1,0 +1,13 @@
+digraph 2363509768160 {
+	rankdir=LR
+	1 [label=1 shape=circle]
+	2 [label=2 shape=circle]
+	3 [label=3 shape=circle]
+	4 [label=4 shape=circle]
+	1 -> 1 [label="(assert(and (>= p1 age)(>= age p2)))" color=black]
+	1 -> 2 [label="(assert(= age p2))" color=black]
+	2 -> 2 [label="(assert(and (>= p1 age)(>= age p2 )))" color=black]
+	2 -> 3 [label="(assert (= age p1))" color=black]
+	3 -> 4 [label="(assert (< 30 (- p1 p2)))" color=black]
+	4 -> 4 [label="(assert (= p1 p1))" color=black]
+}

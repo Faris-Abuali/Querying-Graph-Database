@@ -1,0 +1,13 @@
+digraph 1978420040800 {
+	1 [label=1]
+	2 [label=2]
+	3 [label=3]
+	4 [label=4]
+	5 [label=5]
+	1 -> 2 [color=black]
+	2 -> 3 [color=black]
+	2 -> 5 [color=green]
+	3 -> 4 [color=black]
+	4 -> 5 [color=black]
+	4 -> 2 [color=green]
+}

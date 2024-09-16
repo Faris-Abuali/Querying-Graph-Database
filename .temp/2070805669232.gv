@@ -1,0 +1,11 @@
+digraph 2070805669232 {
+	rankdir=LR
+	1 [label=1 shape=circle]
+	2 [label=2 shape=circle]
+	3 [label=3 shape=circle]
+	4 [label=4 shape=circle]
+	1 -> 2 [label="(assert(> age 20))" color=blue]
+	2 -> 3 [label="(assert(= hobby \"Reading\"))" color=blue]
+	3 -> 4 [label="(assert(= name \"Bob\"))" color=blue]
+	4 -> 1 [label="(assert(= age 40))" color=blue]
+}
