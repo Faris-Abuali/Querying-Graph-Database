@@ -13,8 +13,8 @@ Graph databases are widely used to model and store complex relationships between
 
 ## Getting Started
 ### Prerequisites
-[Python](https://www.python.org/) (version 3.x)
-[z3-solver](https://pypi.org/project/z3-solver/) (Python bindings for the z3 SAT solver)
+- [Python](https://www.python.org/) (version 3.x)
+- [z3-solver](https://pypi.org/project/z3-solver/) (Python bindings for the z3 SAT solver)
 
 ### Installation
 1. Clone the repository:
