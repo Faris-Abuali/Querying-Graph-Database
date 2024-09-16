@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 
 ### Documentation
-For detailed documentation on how to prepare your graph data, encode queries, and interpret results, please refer to the [project documentation](https://sci-git.cs.rptu.de/m_elsayed24/automated-reasoning-ss2024-project/-/blob/main/project.pdf).
+For detailed documentation on how to prepare your graph data, encode queries, and interpret results, please refer to the [project documentation](https://github.com/Faris-Abuali/Querying-Graph-Database/blob/main/project.pdf).
 
 ### Group Members
 - Mahmoud M. Hamido (Mtr. No. 428723)
