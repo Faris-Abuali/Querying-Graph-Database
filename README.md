@@ -1,7 +1,11 @@
 # Querying Graph Databases using z3 SAT Solver
 
 ## Overview
-The project explores the application of the z3 SAT solver for querying graph databases. This project aims to integrate the power of z3, a popular SMT solver, with graph database querying to enable efficient and scalable solutions for complex graph-related problems.
+- Developed as part of the Automated Reasoning course at RPTU Kaiserslautern, this project focuses on the innovative application of the z3 SAT solver for querying graph databases. 
+
+- The project integrates the capabilities of z3, a renowned SMT (Satisfiability-Module-Theory) solver, to enhance the efficiency and scalability of querying complex graph structures. 
+
+- By translating graph queries into SAT problems, the project provides a robust framework for solving intricate graph-related challenges, demonstrating a significant advancement in database querying techniques and automated reasoning.
 
 ## Project Description
 Graph databases are widely used to model and store complex relationships between data entities. However, querying such databases efficiently can be challenging. This project addresses this challenge by leveraging the z3 SAT solver to handle graph queries. By encoding graph queries as SAT problems, the z3 solver can determine the satisfiability of these queries and help in retrieving relevant information from the graph database.
